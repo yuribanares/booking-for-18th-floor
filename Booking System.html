@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BPI 18th Floor Room Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f87;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Book a Room - BPI 18th Floor</h2>
+    <form id="bookingForm">
+      <label for="room">Select Room:</label>
+      <select id="room" name="room" required>
+        <option value="">-- Select a Room --</option>
+        <option value="conf1">Conference Room 1</option>
+        <option value="conf2">Conference Room 2</option>
+        <option value="huddle1">Huddle Room 1</option>
+        <option value="huddle2">Huddle Room 2</option>
+      </select>
+
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="start-time">Start Time:</label>
+      <input type="time" id="start-time" name="start-time" required>
+
+      <label for="end-time">End Time:</label>
+      <input type="time" id="end-time" name="end-time" required>
+
+      <div class="error" id="errorMsg"></div>
+
+      <button type="submit">Book Room</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+      const room = document.getElementById('room').value;
+      const date = document.getElementById('date').value;
+      const startTime = document.getElementById('start-time').value;
+      const endTime = document.getElementById('end-time').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      errorMsg.textContent = '';
+
+      const today = new Date().toISOString().split('T')[0];
+
+      if (!room || !date || !startTime || !endTime) {
+        errorMsg.textContent = 'Please fill in all fields.';
+        event.preventDefault();
+        return;
+      }
+
+      if (date < today) {
+        errorMsg.textContent = 'Booking date cannot be in the past.';
+        event.preventDefault();
+        return;
+      }
+
+      if (startTime >= endTime) {
+        errorMsg.textContent = 'Start time must be before end time.';
+        event.preventDefault();
+        return;
+      }
+
+      alert('Room booked successfully!');
+    });
+  </script>
+</body>
+</html>
